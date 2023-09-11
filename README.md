@@ -2,7 +2,7 @@
 
 ## ZSH
 ```
-sudo apt-get install -y ZSH
+sudo apt-get install -y zsh
 ```
 
 ## Oh-my-zsh
