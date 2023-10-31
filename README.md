@@ -2,7 +2,7 @@
 
 ## ZSH
 ```
-Ubuntu
+# Ubuntu
 sudo apt-get install -y zsh
 ```
 
