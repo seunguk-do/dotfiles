@@ -30,12 +30,9 @@ source $ZSH/oh-my-zsh.sh
 ## Set language environment
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
 # Aliases
-alias vim="nvim"
+if [ $machine = "Mac" ]; then
+    alias vim="nvim"
+else
+    alias vim="nvim --appimage-extract-and-run"
+fi
