@@ -3,9 +3,6 @@ return {
     "hrsh7th/nvim-cmp",
     opts = {
       mapping = {
-        ["<CR>"] = function(fallback)
-          fallback()
-        end,
         ["<C-j>"] = function(fallback)
           if require("cmp").visible() then
             require("cmp").select_next_item()
