@@ -35,4 +35,5 @@ if [ $machine = "Mac" ]; then
     alias vim="nvim"
 else
     alias vim="nvim --appimage-extract-and-run"
+    alias tmux="tmux -2"
 fi
