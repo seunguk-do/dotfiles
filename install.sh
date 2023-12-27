@@ -33,6 +33,6 @@ for i in ${DIRS}; do
 	stow $i
 done
 
+ln -s .tmux.conf $HOME/.tmux.conf
+ln -s .zshrc $HOME/.zshrc
 ln -s nvim $HOME/.config/nvim
-ln -s nvim $HOME/.tmux.conf
-ln -s nvim $HOME/.zshrc
