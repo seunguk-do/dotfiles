@@ -25,13 +25,13 @@ if [ ! -d "$BD" ]; then
 	mkdir $BD
 fi
 
-mv ~/.tmux* $BD
-mv ~/.zshrc $BD
+if [ ! -d "$HOME/.config" ]; then
+	mkdir $HOME/.config
+fi
 
-for i in ${DIRS}; do
-	echo "install $i"
-	stow $i
-done
+mv $HOME/.tmux* $BD
+mv $HOME/.zshrc $BD
+mv $HOME/.config/nvim $BD
 
 ln -s .tmux.conf $HOME/.tmux.conf
 ln -s .zshrc $HOME/.zshrc
