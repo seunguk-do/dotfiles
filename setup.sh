@@ -25,7 +25,6 @@ create_symlinks() {
 common_items=(
   "tmux.conf:$HOME/.tmux.conf"
   "nvim:$XDG_CONFIG_HOME/nvim"
-  "zprofile:$HOME/.zprofile"
   "zshrc:$HOME/.zshrc"
   "bash_profile:$HOME/.bash_profile"
 )
