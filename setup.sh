@@ -32,32 +32,29 @@ common_items=(
 
 create_symlinks "${common_items[@]}"
 
-# MacOS specific setup
-if [[ "$OSTYPE" == darwin* ]]; then
-  macos_directories=(
-    "$HOME/.qutebrowser"
-  )
-  macos_items=(
-    "qutebrowser/config.py:$HOME/.qutebrowser/config.py"
-  )
-  create_directories "${macos_directories[@]}"
-  create_symlinks "${macos_items[@]}"
-fi
+# brew packages
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# # Packages
-#
-# # install brew
-# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-#
-# # ubuntu apt packages
-# sudo apt update && sudo apt install ripgrep gcc g++ unzip fd direnv starship
-#
-# # ubuntu brew packages
-# brew install neovim lazygit fzf
-#
-# # devpod
-# curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-darwin-arm64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod
-#
-# # set up prompt
-# mkdir -p "$HOME/.zsh"
-# git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+brew_packages=(
+  fd
+  ripgrep
+  lazygit
+  fzf
+  direnv
+  starship
+  neovim
+)
+
+# Iterate over the array and install each package
+for package in "${brew_packages[@]}"; do
+  echo "Installing $package..."
+  /home/linuxbrew/.linuxbrew/bin/brew install "$package"
+done
+
+# set up prompt
+mkdir -p "$HOME/.zsh"
+git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+
+# devpod
+curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-darwin-arm64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod
+devpod use ide none
