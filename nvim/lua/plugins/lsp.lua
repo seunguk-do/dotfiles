@@ -1,3 +1,13 @@
 return {
-  { "williamboman/mason-lspconfig.nvim", config = function() end },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        pyright = {
+          mason = false,
+          autostart = false,
+        },
+      },
+    },
+  },
 }
