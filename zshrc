@@ -41,8 +41,8 @@ export PATH
 # ~~~~~~~~~~~~~~~ Dev Container Specifics ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-if [ -d "/home/linuxbrew/.linuxbrew" ]; then
-     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [ -d "$HOME/.homebrew" ]; then
+     eval "$($HOME/.homebrew/bin/brew shellenv)"
 fi
 
 

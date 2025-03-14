@@ -33,7 +33,7 @@ common_items=(
 create_symlinks "${common_items[@]}"
 
 # brew packages
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+mkdir $HOME/.homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
 
 brew_packages=(
   fd
@@ -48,7 +48,7 @@ brew_packages=(
 # Iterate over the array and install each package
 for package in "${brew_packages[@]}"; do
   echo "Installing $package..."
-  /home/linuxbrew/.linuxbrew/bin/brew install "$package"
+  $HOME/.homebrew/bin/brew install "$package"
 done
 
 # set up prompt
