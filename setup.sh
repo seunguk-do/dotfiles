@@ -43,6 +43,7 @@ brew_packages=(
   direnv
   starship
   neovim
+  tmux
 )
 
 # Iterate over the array and install each package
