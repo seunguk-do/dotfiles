@@ -1,7 +1,7 @@
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-# Set to superior editing mode
+# Set to vi editing mode
 
 set -o vi
 
@@ -12,10 +12,7 @@ export TERM="tmux-256color"
 # Directories
 
 export REPOS="$HOME/Repos"
-export GITUSER="seunguk-do"
-export GHREPOS="$REPOS/github.com/$GITUSER"
-export DOTFILES="$GHREPOS/dotfiles"
-export LAB="$GHREPOS/lab"
+export DOTFILES="$REPOS/dotfiles"
 export SCRIPTS="$DOTFILES/scripts"
 
 
@@ -26,7 +23,6 @@ setopt extended_glob null_glob
 
 path=(
     $path                           # Keep existing PATH entries
-    # $HOME/bin
     $HOME/.local/bin
     $SCRIPTS
 )
@@ -78,16 +74,12 @@ prompt pure
 
 
 alias vim=nvim
-
+alias python=python3
 alias scripts='cd $SCRIPTS'
 
 # Repos
 
-alias lab='cd $LAB'
-alias dot='cd $GHREPOS/dotfiles'
-alias repos='cd $REPOS'
-alias ghrepos='cd $GHREPOS'
-alias gr='ghrepos'
+alias dot='cd $REPOS/dotfiles'
 
 # ls
 
