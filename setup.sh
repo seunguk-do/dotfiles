@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES_DIR="$HOME/Repos/github.com/seunguk-do/dotfiles"
+DOTFILES_DIR="$HOME/Repos/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
 
 create_symlinks() {
@@ -31,15 +31,6 @@ common_items=(
 
 create_symlinks "${common_items[@]}"
 
-# apt packages
-sudo apt update
-sudo apt install \
-  zsh \
-  python3 \
-  python3-pip \
-  python3-venv \
-  python-is-python3
-
 # brew packages
 mkdir $HOME/.homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
 
@@ -60,10 +51,17 @@ for package in "${brew_packages[@]}"; do
   $HOME/.homebrew/bin/brew install "$package"
 done
 
-# set up prompt
-mkdir -p "$HOME/.zsh"
-git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+if [[ "$OSTYPE" == linux-gnu ]]; then
+  # apt packages
+  sudo apt update
+  sudo apt install \
+    zsh \
+    python3 \
+    python3-pip \
+    python3-venv \
+    python-is-python3
 
-# devpod
-curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-linux-amd64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod
-devpod use ide none
+elif [[ "$OSTYPE" == linux-gnu ]]; then
+  $HOME/.homebrew/bin/brew install python
+  $HOME/.homebrew/bin/brew install --cask wezterm
+fi
