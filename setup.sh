@@ -64,4 +64,9 @@ if [[ "$OSTYPE" == linux-gnu ]]; then
 elif [[ "$OSTYPE" == linux-gnu ]]; then
   $HOME/.homebrew/bin/brew install python
   $HOME/.homebrew/bin/brew install --cask wezterm
+
+  common_items=(
+    "wezterm.lua:$HOME/.wezterm.lua"
+  )
+  create_symlinks "${common_items[@]}"
 fi
