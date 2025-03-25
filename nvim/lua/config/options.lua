@@ -25,3 +25,4 @@ vim.g.clipboard = {
 }
 
 vim.g.lazyvim_python_ruff = "ruff"
+vim.g.lazyvim_python_lsp = "basedpyright"
