@@ -43,6 +43,7 @@ brew_packages=(
   starship
   neovim
   tmux
+  gh
 )
 
 # Iterate over the array and install each package
@@ -51,7 +52,8 @@ for package in "${brew_packages[@]}"; do
   $HOME/.homebrew/bin/brew install "$package"
 done
 
-if [[ "$OSTYPE" == linux-gnu ]]; then
+case "$OSTYPE" in
+"linux-gnu"*)
   # apt packages
   sudo apt update
   sudo apt install \
@@ -61,15 +63,29 @@ if [[ "$OSTYPE" == linux-gnu ]]; then
     python3-venv \
     python-is-python3
 
-elif [[ "$OSTYPE" == linux-gnu ]]; then
-  $HOME/.homebrew/bin/brew install python
+  if [ ! -d "$HOME/.zsh/pure" ]; then
+    mkdir -p "$HOME/.zsh"
+    git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+  else
+    echo "Pure prompt is already installed in $HOME/.zsh/pure"
+  fi
+  ;;
+
+"darwin"*)
   $HOME/.homebrew/bin/brew install --cask wezterm
+  $HOME/.homebrew/bin/brew install coreutils pure
 
   common_items=(
     "wezterm.lua:$HOME/.wezterm.lua"
   )
   create_symlinks "${common_items[@]}"
-fi
+  ;;
+
+*)
+  echo "Unknown OS!" >&2
+  exit 1
+  ;;
+esac
 
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh

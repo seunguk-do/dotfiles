@@ -7,7 +7,6 @@ set -o vi
 
 export VISUAL=nvim
 export EDITOR=nvim
-export TERM="tmux-256color"
 
 # Directories
 
@@ -83,8 +82,14 @@ alias dot='cd $REPOS/dotfiles'
 
 # ls
 
-alias ls='ls --color=auto --group-directories-first'
-alias la='ls -lathr --group-directories-first'
+
+if [[ "$OSTYPE" = linux-gnu ]]; then
+  alias ls='ls --color=auto --group-directories-first'
+  alias la='ls -lah --group-directories-first'
+else
+  alias ls='gls --color=auto --group-directories-first'
+  alias la='gls --color=auto -lah --group-directories-first'
+fi
 
 
 # finds all files recursively and sorts by last modification, ignore hidden files

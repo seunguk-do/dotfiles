@@ -24,4 +24,15 @@ vim.g.clipboard = {
   },
 }
 
+if vim.fn.has("termguicolors") == 1 then
+  -- Neovim has built-in bracketed paste mode support
+  vim.opt.paste = false
+  vim.opt.pastetoggle = ""
+
+  -- Enable termguicolors properly
+  vim.opt.termguicolors = true
+end
+
 vim.g.lazyvim_python_ruff = "ruff"
+vim.g.lazyvim_python_lsp = "basedpyright"
+
