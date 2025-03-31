@@ -42,3 +42,9 @@ end
 vim.g.lazyvim_python_ruff = "ruff"
 vim.g.lazyvim_python_lsp = "basedpyright"
 
+if vim.fn.has("termguicolors") == 1 then
+  vim.opt.t_BE = vim.api.nvim_replace_termcodes([[<Esc>[?2004h]], true, true, true)
+  vim.opt.t_BD = vim.api.nvim_replace_termcodes([[<Esc>[?2004l]], true, true, true)
+  vim.opt.t_PS = vim.api.nvim_replace_termcodes([[<Esc>[200~]], true, true, true)
+  vim.opt.t_PE = vim.api.nvim_replace_termcodes([[<Esc>[201~]], true, true, true)
+end
