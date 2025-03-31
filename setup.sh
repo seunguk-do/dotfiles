@@ -70,3 +70,6 @@ elif [[ "$OSTYPE" == linux-gnu ]]; then
   )
   create_symlinks "${common_items[@]}"
 fi
+
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
