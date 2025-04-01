@@ -72,8 +72,9 @@ case "$OSTYPE" in
   ;;
 
 "darwin"*)
-  $HOME/.homebrew/bin/brew install --cask wezterm
   $HOME/.homebrew/bin/brew install coreutils pure
+
+  brew install --cask ghostty
 
   mkdir $XDG_CONFIG_HOME/ghostty
 
