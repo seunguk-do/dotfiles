@@ -1,0 +1,8 @@
+theme = "Monokai Pro"
+
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 15
+
+macos-icon = custom-style
+macos-icon-ghost-color = BCBEC4
+macos-icon-screen-color = 1E1F22

@@ -75,8 +75,10 @@ case "$OSTYPE" in
   $HOME/.homebrew/bin/brew install --cask wezterm
   $HOME/.homebrew/bin/brew install coreutils pure
 
+  mkdir $XDG_CONFIG_HOME/ghostty
+
   common_items=(
-    "wezterm.lua:$HOME/.wezterm.lua"
+    "ghostty_config:$XDG_CONFIG_HOME/ghostty/config"
   )
   create_symlinks "${common_items[@]}"
   ;;
