@@ -90,5 +90,8 @@ case "$OSTYPE" in
   ;;
 esac
 
+# Install TPM (Tmux Plugin Manager)
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
