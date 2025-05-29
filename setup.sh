@@ -3,7 +3,11 @@ DOTFILES_DIR="$HOME/Repos/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
 
 # Install OS-specific packages
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+if [[ "$OSTYPE" == "linux-gnu"* && ! -x "$(command -v zsh)" ]]; then
+  if ! sudo -n true 2>/dev/null; then
+    echo "Error: sudo privileges required to install zsh. If you don't have sudo access, please ask your administrator to install zsh." >&2
+    exit 1
+  fi
   sudo apt update && sudo apt install -y zsh
 fi
 
