@@ -1,97 +1,56 @@
 #!/bin/bash
-
 DOTFILES_DIR="$HOME/Repos/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
 
-create_symlinks() {
-  local items=("$@")
-  for item in "${items[@]}"; do
-    IFS=':' read -r source target <<<"$item"
-    if [ -L "$target" ]; then
-      echo "Removing existing symlink $target"
-      unlink "$target"
-    elif [ -d "$target" ]; then
-      echo "Warning: $target is a directory. Skipping..."
-      continue
-    elif [ -e "$target" ]; then
-      echo "Warning: $target already exists. Skipping..."
-      continue
-    fi
-    ln -s "$DOTFILES_DIR/$source" "$target"
-    echo "Created symlink for $source"
-  done
-}
+# Install OS-specific packages
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  sudo apt update && sudo apt install -y zsh
+fi
 
-common_items=(
-  "tmux.conf:$HOME/.tmux.conf"
-  "nvim:$XDG_CONFIG_HOME/nvim"
-  "zshrc:$HOME/.zshrc"
-  "bash_profile:$HOME/.bash_profile"
-)
+# Install Homebrew
+if [ ! -d "$HOME/.homebrew" ]; then
+  mkdir -p $HOME/.homebrew
+  curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 2 -C $HOME/.homebrew
+  BREW="$HOME/.homebrew/bin/brew"
+fi
 
-create_symlinks "${common_items[@]}"
+# Install packages
+packages=(fd ripgrep lazygit fzf direnv neovim tmux gh)
+[[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
-# brew packages
-mkdir $HOME/.homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
-
-brew_packages=(
-  fd
-  ripgrep
-  lazygit
-  fzf
-  direnv
-  starship
-  neovim
-  tmux
-  gh
-)
-
-# Iterate over the array and install each package
-for package in "${brew_packages[@]}"; do
-  echo "Installing $package..."
-  $HOME/.homebrew/bin/brew install "$package"
+for pkg in "${packages[@]}"; do
+  $BREW install "$pkg"
 done
 
-case "$OSTYPE" in
-"linux-gnu"*)
-  # apt packages
-  sudo apt update
-  sudo apt install \
-    zsh \
-    python3 \
-    python3-pip \
-    python3-venv \
-    python-is-python3
+# Install cask packages on macOS
+[[ "$OSTYPE" == "darwin"* ]] && $BREW install --cask ghostty
 
-  if [ ! -d "$HOME/.zsh/pure" ]; then
-    mkdir -p "$HOME/.zsh"
-    git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
-  else
-    echo "Pure prompt is already installed in $HOME/.zsh/pure"
-  fi
-  ;;
+# Install Pure prompt
+[ ! -d "$HOME/.zsh/pure" ] && {
+  mkdir -p "$HOME/.zsh"
+  git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+}
 
-"darwin"*)
-  $HOME/.homebrew/bin/brew install coreutils pure
-
-  brew install --cask ghostty
-
-  mkdir $XDG_CONFIG_HOME/ghostty
-
-  common_items=(
-    "ghostty_config:$XDG_CONFIG_HOME/ghostty/config"
-  )
-  create_symlinks "${common_items[@]}"
-  ;;
-
-*)
-  echo "Unknown OS!" >&2
-  exit 1
-  ;;
-esac
-
-# Install uv
+# Install tools
 curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Install Blender (Linux only)
+BLENDER_VERSION=4.4.3
+if [[ "$OSTYPE" == "linux-gnu"* && ! -d "$HOME/.local/lib/blender-${BLENDER_VERSION}-linux-x64" ]]; then
+  mkdir -p $HOME/.local/lib
+  wget -O- https://download.blender.org/release/Blender${BLENDER_VERSION%.*}/blender-${BLENDER_VERSION}-linux-x64.tar.xz | tar -xJ -C $HOME/.local/lib
+  ln -sf $HOME/.local/lib/blender-${BLENDER_VERSION}-linux-x64/blender $HOME/.local/bin/blender
+fi
+
+# Create symlinks
+create_symlink() {
+  [ -L "$3" ] && unlink "$2"
+  [ ! -e "$2" ] && ln -s "$DOTFILES_DIR/$1" "$2" && echo "Created symlink for $1"
+}
+
+create_symlink "tmux.conf" "$HOME/.tmux.conf"
+create_symlink "nvim" "$XDG_CONFIG_HOME/nvim"
+create_symlink "zshrc" "$HOME/.zshrc"
+create_symlink "bash_profile" "$HOME/.bash_profile"
+[[ "$OSTYPE" == "darwin"* ]] && create_symlink "ghostty_config" "$XDG_CONFIG_HOME/ghostty/config"
