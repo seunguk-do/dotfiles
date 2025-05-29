@@ -22,8 +22,8 @@ fi
 packages=(fd ripgrep lazygit fzf neovim tmux gh)
 [[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
-for pkg in "${packages[@]}"; do
-  $BREW install "$pkg"
+for package in "${packages[@]}"; do
+  $HOME/.homebrew/bin/brew install "$package"
 done
 
 # Install cask packages on macOS
