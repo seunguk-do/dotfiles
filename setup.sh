@@ -14,12 +14,12 @@ fi
 # Install Homebrew
 if [ ! -d "$HOME/.homebrew" ]; then
   mkdir -p $HOME/.homebrew
-  curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 2 -C $HOME/.homebrew
+  curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
   BREW="$HOME/.homebrew/bin/brew"
 fi
 
 # Install packages
-packages=(fd ripgrep lazygit fzf direnv neovim tmux gh)
+packages=(fd ripgrep lazygit fzf neovim tmux gh)
 [[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
 for pkg in "${packages[@]}"; do
@@ -36,6 +36,7 @@ done
 }
 
 # Install tools
+curl -sfL https://direnv.net/install.sh | bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
