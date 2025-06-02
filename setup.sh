@@ -1,6 +1,7 @@
 #!/bin/bash
 DOTFILES_DIR="$HOME/Repos/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
+BREW="$HOME/.homebrew/bin/brew"
 
 # Install OS-specific packages
 if [[ "$OSTYPE" == "linux-gnu"* && ! -x "$(command -v zsh)" ]]; then
@@ -15,7 +16,6 @@ fi
 if [ ! -d "$HOME/.homebrew" ]; then
   mkdir -p $HOME/.homebrew
   curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
-  BREW="$HOME/.homebrew/bin/brew"
 fi
 
 # Install packages
