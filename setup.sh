@@ -19,7 +19,7 @@ if [ ! -d "$HOME/.homebrew" ]; then
 fi
 
 # Install packages
-packages=(fd ripgrep lazygit fzf direnv neovim tmux gh)
+packages=(fd ripgrep lazygit fzf direnv neovim tmux gh zsh-vi-mode)
 [[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
 for pkg in "${packages[@]}"; do

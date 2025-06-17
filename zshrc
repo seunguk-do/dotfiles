@@ -1,10 +1,6 @@
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-# Set to vi editing mode
-
-set -o vi
-
 export VISUAL=nvim
 export EDITOR=nvim
 export TERM="tmux-256color"
@@ -109,7 +105,7 @@ zstyle ':completion:*' menu select
 
 
 source <(fzf --zsh)
-
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 eval "$(direnv hook zsh)"
 
 
