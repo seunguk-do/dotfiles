@@ -1,6 +1,7 @@
 #!/bin/bash
 DOTFILES_DIR="$HOME/Repos/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
+BREW="$HOME/.homebrew/bin/brew"
 
 # Install OS-specific packages
 if [[ "$OSTYPE" == "linux-gnu"* && ! -x "$(command -v zsh)" ]]; then
@@ -14,8 +15,7 @@ fi
 # Install Homebrew
 if [ ! -d "$HOME/.homebrew" ]; then
   mkdir -p $HOME/.homebrew
-  curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 2 -C $HOME/.homebrew
-  BREW="$HOME/.homebrew/bin/brew"
+  curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
 fi
 
 # Install packages
@@ -36,6 +36,7 @@ done
 }
 
 # Install tools
+curl -sfL https://direnv.net/install.sh | bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
