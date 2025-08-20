@@ -2,6 +2,7 @@
 DOTFILES_DIR="$HOME/Repos/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
 BREW="$HOME/.homebrew/bin/brew"
+NVM_DIR="$HOME/.nvm"
 
 # Install OS-specific packages
 if [[ "$OSTYPE" == "linux-gnu"* && ! -x "$(command -v zsh)" ]]; then
@@ -19,7 +20,7 @@ if [ ! -d "$HOME/.homebrew" ]; then
 fi
 
 # Install packages
-packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide)
+packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide pandoc)
 [[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
 for pkg in "${packages[@]}"; do
@@ -58,4 +59,10 @@ create_symlink "tmux.conf" "$HOME/.tmux.conf"
 create_symlink "nvim" "$XDG_CONFIG_HOME/nvim"
 create_symlink "zshrc" "$HOME/.zshrc"
 create_symlink "bash_profile" "$HOME/.bash_profile"
+create_symlink "claude/commands" "$HOME/.claude/commands"
 [[ "$OSTYPE" == "darwin"* ]] && create_symlink "ghostty_config" "$XDG_CONFIG_HOME/ghostty/config"
+
+# Load nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm install node && nvm use node
+npm install -g @anthropic-ai/claude-code
