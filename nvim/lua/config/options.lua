@@ -33,5 +33,5 @@ if vim.fn.has("termguicolors") == 1 then
   vim.opt.termguicolors = true
 end
 
--- vim.g.lazyvim_python_ruff = "ruff"
--- vim.g.lazyvim_python_lsp = "pyrefly"
+vim.g.lazyvim_python_ruff = "ruff"
+vim.g.lazyvim_python_lsp = "pyrefly"
