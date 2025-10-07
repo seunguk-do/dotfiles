@@ -127,3 +127,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval "$(zoxide init zsh)"
+
+
+# ~~~~~~~~~~~~~~~ Python ~~~~~~~~~~~~~~~~~~~~~~
+export PATH="$(brew --prefix)/opt/python/libexec/bin:$PATH"

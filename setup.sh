@@ -20,7 +20,7 @@ if [ ! -d "$HOME/.homebrew" ]; then
 fi
 
 # Install packages
-packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide pandoc)
+packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide pandoc python@3.12)
 [[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
 for pkg in "${packages[@]}"; do
@@ -40,14 +40,6 @@ done
 curl -sfL https://direnv.net/install.sh | bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-
-# Install Blender (Linux only)
-BLENDER_VERSION=4.4.3
-if [[ "$OSTYPE" == "linux-gnu"* && ! -d "$HOME/.local/lib/blender-${BLENDER_VERSION}-linux-x64" ]]; then
-  mkdir -p $HOME/.local/lib
-  wget -O- https://download.blender.org/release/Blender${BLENDER_VERSION%.*}/blender-${BLENDER_VERSION}-linux-x64.tar.xz | tar -xJ -C $HOME/.local/lib
-  ln -sf $HOME/.local/lib/blender-${BLENDER_VERSION}-linux-x64/blender $HOME/.local/bin/blender
-fi
 
 # Create symlinks
 create_symlink() {
