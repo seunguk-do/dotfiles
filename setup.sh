@@ -52,6 +52,7 @@ create_symlink "nvim" "$XDG_CONFIG_HOME/nvim"
 create_symlink "zshrc" "$HOME/.zshrc"
 create_symlink "bash_profile" "$HOME/.bash_profile"
 create_symlink "claude/commands" "$HOME/.claude/commands"
+create_symlink "claude/settings.json" "$HOME/.claude/settings.json"
 [[ "$OSTYPE" == "darwin"* ]] && create_symlink "ghostty_config" "$XDG_CONFIG_HOME/ghostty/config"
 
 # Load nvm
