@@ -129,6 +129,14 @@ RUN chmod -R 777 /root /app
 
 ```
 
+Add the `.dockerignore` below to the project root.
+
+```.dockerignore
+/data
+.git
+.venv
+```
+
 ## Configure `Makefile`
 
 Generate a Makefile using the example below.
