@@ -30,21 +30,34 @@ Refer to the sections below for detailed description of each step.
 
 ## Requirement Check
 
-Read documentation files such as `README.md` or `INSTALLATION.md` to identify the requirements.
+Read documentation files such as `README.md`, `INSTALLATION.md`, or `pyproject.toml` to identify the requirements.
 The following fields should be specified:
 
 - `cuda_version` (default 12.1)
 - `ubuntu_version` (default: 22.04)
 - `python_version` (default 3.11)
-- `pytorch_version` (default: 2.5.1)
+- `torch_version` (default: 2.5.1)
+- `torchvision_version` (default: 0.20.1)
 
 These fields are used in the subsequent sections.
 If any requirement is not specified, use the default values.
 
 ## Configure `pyproject.toml`
 
-Generate `pyproject.toml` by running `uv init --bare --python [python_version]`
-Then add `torch` and `torchvision` to it. The index should be specified as follows:
+### Initial Setup
+
+If starting fresh: Generate `pyproject.toml` by running:
+
+```bash
+uv init --bare --python [python_version]
+```
+
+If `pyproject.toml` exists: Skip `uv init` and proceed to edit the existing file according to the requirements below.
+
+### Add core dependencies
+
+Add `torch` and `torchvision` to your project dependencies.
+Configure the `PyTorch` custom index:
 
 ```toml
 [project]
@@ -52,8 +65,8 @@ name = "project"
 version = "0.1.0"
 requires-python = ">=3.12.0"
 dependencies = [
-    "torch==2.5.1",
-    "torchvision==0.20.1",
+    "torch==[torch_version]",
+    "torchvision==[torchvision_version]",
 ]
 
 [tool.uv.sources]
@@ -70,16 +83,44 @@ url = "https://download.pytorch.org/whl/cu121"
 explicit = true
 ```
 
-Replace the dependency versions and the URL according to the requirements.
-Then add any additional Python dependencies specified in the documentation files.
-If a `requirements.txt` file exists, dependencies can be added using the following command:
+Important: Replace `[torch_version]`, `[torchvision_version]`, and the index URL according to your requirements (e.g., different `CUDA` versions use different URLs).
+
+### Configure Build System (if needed)
+
+If your project requires a build system, add the `setuptools` configuration.
+First check for an existing `setup.py` or `pyproject.toml` to obtain the necessary configuration information, then add:
+
+```toml
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["project"]
+
+[tool.setuptools.package-data]
+"project" = ["src/project"]
+```
+
+### Add Additional Dependencies
+
+Add any other Python dependencies specified in the documentation files.
+If a `requirements.txt` exists, you can import all dependencies at once:
 
 ```bash
 uv add -r requirements.txt
 ```
 
-Then run `uv sync` to generate `uv.lock` properly.
-If you encounter any errors, try relaxing the constraints for dependencies or adjusting the versions.
+Otherwise, add dependencies individually using `uv add [package-name]`.
+If dependencies conflict, then adjust the versions of python or other packages.
+
+### Finalize Configuration
+
+Run the following command to generate `uv.lock`:
+
+```bash
+uv sync
+```
 
 ## Configure `Dockerfile`
 
