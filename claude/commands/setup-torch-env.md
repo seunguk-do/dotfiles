@@ -154,16 +154,23 @@ WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
 
+# Grant 777 permissions to all newly created files under /root and /app
+RUN chmod -R 777 /root /app
+
 # Install the project's dependencies using the lockfile and settings
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    set -uex; \
+    umask 0002; \
     uv sync --locked --no-install-project --no-dev --python [python_version]
 
 # Then, add the rest of the project source code and install it
 # Installing separately from its dependencies allows optimal layer caching
 COPY . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
+    set -uex; \
+    umask 0002; \
     uv sync --locked --no-dev --python [python_version]
 
 RUN chmod -R 777 /root /app
@@ -200,10 +207,13 @@ build:
   --tag ${IMAGE_NAME}:latest \
   -f Dockerfile .
 
-run:
+run: DOCKER_INTERACTIVE := -it
+claude-run: DOCKER_INTERACTIVE :=
+
+run claude-run:
  @mkdir -p ./data
  @docker run \
-  -it \
+  ${DOCKER_INTERACTIVE} \
   --rm \
   --gpus all \
   --user $(shell id -u):$(shell id -g) \
@@ -220,24 +230,6 @@ run:
   ${IMAGE_NAME}:latest \
   uv run $(filter-out $@,$(MAKECMDGOALS))
 
-claude-run:
- @mkdir -p ./data
- @docker run \
-  --rm \
-  --gpus all \
-  --user $(shell id -u):$(shell id -g) \
-  --shm-size ${SHM_SIZE} \
-  --workdir=${PROJECT_ROOT} \
-  --volume="./data:${DATA_DIR}" \
-  -e PROJECT_ROOT=${PROJECT_ROOT} \
-  -e DATA_DIR=${DATA_DIR} \
-  -e HOME=/tmp \
-  -e XDG_CACHE_HOME=${DATA_DIR}/cache \
-  -e XDG_DATA_HOME=${DATA_DIR}/cache \
-  -e TRITON_CACHE_DIR=${DATA_DIR}/cache/triton \
-  -e CUDA_VISIBLE_DEVICES=${GPU_IDS} \
-  ${IMAGE_NAME}:latest \
-  uv run $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: run build
 
