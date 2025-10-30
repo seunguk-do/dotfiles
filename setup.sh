@@ -28,7 +28,7 @@ for pkg in "${packages[@]}"; do
 done
 
 # Install cask packages on macOS
-[[ "$OSTYPE" == "darwin"* ]] && $BREW install --cask ghostty mactex-no-gui
+[[ "$OSTYPE" == "darwin"* ]] && $BREW install --cask ghostty mactex-no-gui 1password-cli
 
 # Install Pure prompt
 [ ! -d "$HOME/.zsh/pure" ] && {
