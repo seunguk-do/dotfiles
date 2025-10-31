@@ -162,7 +162,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     set -uex; \
-    umask 777; \
+    umask 0002; \
     uv sync --locked --no-install-project --no-dev --python [python_version]
 
 # Then, add the rest of the project source code and install it
@@ -170,7 +170,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 COPY . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     set -uex; \
-    umask 777; \
+    umask 0002; \
     uv sync --locked --no-dev --python [python_version]
 
 ```
