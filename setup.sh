@@ -2,6 +2,7 @@
 DOTFILES_DIR="$HOME/Repos/dotfiles"
 XDG_CONFIG_HOME="$HOME/.config"
 BREW="$HOME/.homebrew/bin/brew"
+CONDA="$HOME/.conda"
 NVM_DIR="$HOME/.nvm"
 
 # Install OS-specific packages
@@ -17,6 +18,15 @@ fi
 if [ ! -d "$HOME/.homebrew" ]; then
   mkdir -p $HOME/.homebrew
   curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/.homebrew
+fi
+
+# Install conda
+
+if [ ! -d "$HOME/.homebrew" ]; then
+  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  bash Miniconda3-latest-Linux-x86_64.sh -b -p $CONDA
+  rm Miniconda3-latest-Linux-x86_64.sh
+  ./$HOME/.conda/bin/conda init zsh
 fi
 
 # Install packages
