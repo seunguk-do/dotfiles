@@ -30,7 +30,7 @@ if [ ! -d "$HOME/.homebrew" ]; then
 fi
 
 # Install packages
-packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide pandoc python@3.12)
+packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide pandoc)
 [[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
 for pkg in "${packages[@]}"; do
