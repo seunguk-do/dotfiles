@@ -30,7 +30,7 @@ if [ ! -d "$HOME/.conda" ]; then
 fi
 
 # Install packages
-packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide pandoc)
+packages=(fd ripgrep lazygit fzf neovim tmux gh yt-dlp zoxide pandoc markdownlint-cli tree-sitter-cli)
 [[ "$OSTYPE" == "darwin"* ]] && packages+=(coreutils)
 
 for pkg in "${packages[@]}"; do

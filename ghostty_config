@@ -9,3 +9,5 @@ macos-icon-screen-color = 1E1F22
 
 clipboard-write = allow
 keybind = shift+enter=text:\n
+
+desktop-notifications = true
